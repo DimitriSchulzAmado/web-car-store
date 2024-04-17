@@ -1,13 +1,15 @@
 from django.shortcuts import render
+from django.views.generic import View  # CBV
 
 
-def home(request):
-    return render(
-        request,
-        'home.html',
-        {
-            "extraContext": {
-                "title": "Home",
+class HomeView(View):
+    def get(self, request):
+        return render(
+            request,
+            'home.html',
+            {
+                "extraContext": {
+                    "title": "Home",
+                }
             }
-        }
-    )
+        )

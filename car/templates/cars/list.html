@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extraHead %}
+
+{% endblock extraHead %}
+
+{% block mainContent %}
+    <div class="w-screen h-[calc(100vh-84px)] pt-8 p-12 space-y-4 pb-10">
+        <h1 class="text-blue-500 text-2xl font-bold">
+            {{ context.title_of_page }} LUXURY CARS FOR SALE
+        </h1>
+        <form id="filter-form" class="flex items-center justify-between w-full">
+            <div class="flex items-center gap-6">
+                {{ context.filter.form.as_p }}
+            </div>
+            <div class="flex items-center gap-6">
+                <a class="px-4 py2 rounded-none font-bold text-white bg-red-500 text-sm">EXPORT</a>
+            </div>
+        </form>
+    </div>
+{% endblock mainContent %}

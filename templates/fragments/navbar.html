@@ -14,23 +14,24 @@
            id="new" href="{% url 'car-list' %}?situation=new">
             NEW
         </a>
-{#        <span class="mb-2">|</span>#}
-{#        <a class="border-b-2 bg-app-gray-400 {% if context.situation == 'pre-made' %} border-b-black font-bold {% endif %}"#}
-{#           id="new" href="{% url 'pre-made' %}?situation=pre-made">#}
-{#            PRE-MADE#}
-{#        </a>#}
-{#        <span class="mb-2">|</span>#}
-{#        <a class="border-b-2 bg-app-gray-400 {% if context.situation == 'promotional' %} border-b-black font-bold {% endif %}"#}
-{#           id="new" href="{% url 'promotional' %}?situation=promotional">#}
-{#            PROMOTIONAL#}
-{#        </a>#}
-{#        <span class="mb-2">|</span>#}
-{#        <a class="border-b-2 bg-app-gray-400 {% if context.situation == 'contact' %} border-b-black font-bold {% endif %}"#}
-{#           id="new" href="{% url 'contact' %}?situation=contact">#}
-{#            CONTACT#}
-{#        </a>#}
-{#        <span class=" mb-2">|</span>#}
+        <span class="mb-2">|</span>
+        <a class="border-b-2 bg-app-gray-400 {% if context.situation == 'pre-made' %} border-b-black font-bold {% endif %}"
+           id="pre-made" href="{% url 'pre-made' %}?situation=pre-made">
+            PRE-MADE
+        </a>
+        <span class="mb-2">|</span>
+        <a class="border-b-2 bg-app-gray-400 {% if context.situation == 'promotional' %} border-b-black font-bold {% endif %}"
+           id="promotional" href="{% url 'promotional' %}?situation=promotional">
+            PROMOTIONAL
+        </a>
+        <span class="mb-2">|</span>
+        <a class="border-b-2 bg-app-gray-400 {% if context.situation == 'contact' %} border-b-black font-bold {% endif %}"
+           id="contact" href="{% url 'contact' %}?situation=contact">
+            CONTACT
+        </a>
+        <span class=" mb-2">|</span>
     </div>
+
     <div class="flex gap-2 item-center">
         <i class="bi bi-instagram text-app-blue-500"></i>
         <i class="bi bi-facebook text-app-blue-500"></i>

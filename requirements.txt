@@ -1,1 +1,3 @@
-Pillow
+django
+pillow
+django-filter

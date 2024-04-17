@@ -1,7 +1,25 @@
 {% extends 'base.html' %}
-
 {% load static %}
 
+{% block extraHead %}
+    <script src="{% static 'js/slider.js' %}"></script>
+{% endblock extraHead %}
+
 {% block mainContent %}
-    <h1>Hello World</h1>
+    <div class="w-screen h-[calc(100vh-84px)] py-10 relative">
+        <div id="legend" class="px-8 py-4 bg-app-gray-400/50 absolute top-[80px] -translate-x-1/2 left-1/2 text-center">
+            <span class="font-roboto text-black text-2xl">Experience the pinnacle of luxury and performance in our premium vehicles.</span>
+        </div>
+        <button id="back" class="absolute -translate-y-1/2 top-1/2 left-4 bg-white rounded-full text-2xl size-8 flex items-center justify-center">
+            <i class="bi bi-arrow-left-short"></i>
+        </button>
+        <div id="slider-container" class="w-screen h-full flex overflow-hidden">
+            <div class="bg-cover h-full flex-[0_0_100%_!important] w-screen bg-[url({% static 'images/car_1.png' %})]"></div>
+            <div class="bg-cover h-full flex-[0_0_100%_!important] w-screen bg-[url({% static 'images/car_2.png' %})]"></div>
+            <div class="bg-cover h-full flex-[0_0_100%_!important] w-screen bg-[url({% static 'images/car_3.png' %})]"></div>
+        </div>
+        <button id="next" class="absolute -translate-y-1/2 top-1/2 right-4 bg-white rounded-full text-2xl size-8 flex items-center justify-center">
+            <i class="bi bi-arrow-right-short"></i>
+        </button>
+    </div>
 {% endblock mainContent %}
