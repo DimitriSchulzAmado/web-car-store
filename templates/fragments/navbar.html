@@ -1,0 +1,40 @@
+{% load static %}
+
+{% block extraHead %}
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+{% endblock extraHead %}
+
+<nav class="navbar p-4 flex justify-between">
+    <a href="{% url 'home' %}">
+        <img src="{% static 'images/logo.png' %}" alt="Logo">
+    </a>
+
+    <div class="flex gap-3 items-center">
+        <a class="border-b-2 bg-app-gray-400 {% if context.situation == 'new' %} border-b-black font-bold {% endif %}"
+           id="new" href="{% url 'car-list' %}?situation=new">
+            NEW
+        </a>
+{#        <span class="mb-2">|</span>#}
+{#        <a class="border-b-2 bg-app-gray-400 {% if context.situation == 'pre-made' %} border-b-black font-bold {% endif %}"#}
+{#           id="new" href="{% url 'pre-made' %}?situation=pre-made">#}
+{#            PRE-MADE#}
+{#        </a>#}
+{#        <span class="mb-2">|</span>#}
+{#        <a class="border-b-2 bg-app-gray-400 {% if context.situation == 'promotional' %} border-b-black font-bold {% endif %}"#}
+{#           id="new" href="{% url 'promotional' %}?situation=promotional">#}
+{#            PROMOTIONAL#}
+{#        </a>#}
+{#        <span class="mb-2">|</span>#}
+{#        <a class="border-b-2 bg-app-gray-400 {% if context.situation == 'contact' %} border-b-black font-bold {% endif %}"#}
+{#           id="new" href="{% url 'contact' %}?situation=contact">#}
+{#            CONTACT#}
+{#        </a>#}
+{#        <span class=" mb-2">|</span>#}
+    </div>
+    <div class="flex gap-2 item-center">
+        <i class="bi bi-instagram text-app-blue-500"></i>
+        <i class="bi bi-facebook text-app-blue-500"></i>
+        <i class="bi bi-linkedin text-app-blue-500"></i>
+        <i class="bi bi-whatsapp text-app-blue-500"></i>
+    </div>
+</nav>
