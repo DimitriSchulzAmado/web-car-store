@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extraHead %}
+    <link rel="stylesheet" href="{% static 'css/filter-form.css' %}">
+    <script src="{% static 'js/file-input-control.js' %}"></script>
+    <script src="{% static 'js/checkbox-control.js' %}"></script>
+{% endblock extraHead %}
+
+{% block mainContent %}
+    <div class="w-screen h-[calc(100vh-84px)] pt-8 p-12 space-y-4 pb-10">
+        <h1 class="text-app-blue-500 text-2xl font-bold">
+            {% if context.mode != 'detail' %}
+                REGISTER THE CAR
+            {% else %}
+                DETAIL OF THE CAR <span class="px-10 ml-6 py-1 text-xl bg-app-gray-400 rounded-full text-app-red-500 font-bold">{{ context.form.situation.value|upper }} CAR</span>
+            {% endif %}
+        </h1>
+        <form action="{% url 'cars-create' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ context.form.car_id }}
+            <div class="flex items-center gap-4">
+                {{ context.form.situation }}
+                <div class="flex items-center gap-2">
+                    <input readonly type="checkbox" name="situation_aux" id="new">
+                    <label for="new" class="flex">NEW</label>
+                </div>
+                <div class="flex items-center gap-2">
+                    <input readonly type="checkbox" name="situation_aux" id="pre-made">
+                    <label for="pre-made" class="flex">PRE-MADE</label>
+                </div>
+                <div class="flex items-center gap-2">
+                    <input readonly type="checkbox" name="situation_aux" id="promotional">
+                    <label for="promotional" class="flex">PROMOTIONAL</label>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-x-40 mt-4">
+                <div class="flex flex-col gap-y-6">
+                    {{ context.form.brand }}
+                    {{ context.form.model }}
+                    {{ context.form.version }}
+                    {{ context.form.car_year }}
+                    {{ context.form.color }}
+                    {{ context.form.kilometers }}
+                    {{ context.form.motor_detail }}
+                    {{ context.form.fuel }}
+                    {{ context.form.car_type }}
+                </div>
+                <div class="flex flex-col gap-y-6">
+                    <div class="row-span-3 w-full">
+                        {{ context.form.description }}
+                    </div>
+                    {% if context.mode == 'detail' %}
+                        <div id="file-container" class="row-span-5 w-full mb-auto">
+                            <img class="w-96 h-52" src="{{ context.form.photo_car.value.url }}" alt="">
+                        </div>
+                        <div class="grid grid-cols-2">
+                            <div class="flex items-center space-x-2 bg-app-gray-400 rounded-none px-3 placeholder:font-semibold placeholder:font-roboto placeholder:text-app-blue-300 py-1 placeholder:text-sm">
+                                <span class="text-app-red-500 font-bold">PRICE: U$ </span>
+                                <span class="text-app-red-500 font-bold">{{ context.form.price.value }}</span>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div id="file-container" class="row-span-5 w-full mb-auto">
+                            <label for="id_photo_car" class="cursor-pointer bg-app-gray-400 w-full flex font-bold text-app-gray-500 items-center px-3 py-1.5 gap-2">
+                                <i class="bi bi-box-arrow-in-down text-app-blue-400"></i>
+                                ATTACH THE CAR’S PHOTO
+                            </label>
+                            <div class="hidden">
+                                {{ context.form.photo_car }}
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2">
+                            {{ context.form.price }}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="flex items-center justify-end gap-4">
+                <a href="{% url 'cars-list' %}?situation={{ context.situation }}" class="px-4 py-2 rounded-none font-bold text-white bg-app-red-500 text-sm">BACK</a>
+                {% if context.mode != 'detail' %}
+                    <button type="submit" class="px-4 py-2 rounded-none font-bold text-white bg-app-blue-500 text-sm">REGISTRAR</button>
+                {% endif %}
+            </div>
+        </form>
+    </div>
+{% endblock mainContent %}
+

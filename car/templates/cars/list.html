@@ -2,21 +2,83 @@
 {% load static %}
 
 {% block extraHead %}
-
+    <link rel="stylesheet" href="{% static 'css/filter-form.css' %}">
+    <script src="{% static 'js/form-control.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/modal.css' %}">
 {% endblock extraHead %}
 
 {% block mainContent %}
     <div class="w-screen h-[calc(100vh-84px)] pt-8 p-12 space-y-4 pb-10">
-        <h1 class="text-blue-500 text-2xl font-bold">
-            {{ context.title_of_page }} LUXURY CARS FOR SALE
+        <h1 class="text-app-blue-500 text-2xl font-bold">
+            {% if context.situation == 'sell-your-car' %}
+                CAR FOR SELLING LIST
+            {% else %}
+                {{ context.titleOfPage }} LUXURY CARS FOR SALE
+            {% endif %}
         </h1>
         <form id="filter-form" class="flex items-center justify-between w-full">
-            <div class="flex items-center gap-6">
+            <div class="flex items-center gap-8">
                 {{ context.filter.form.as_p }}
             </div>
             <div class="flex items-center gap-6">
-                <a class="px-4 py2 rounded-none font-bold text-white bg-red-500 text-sm">EXPORT</a>
+                <a class="px-4 py-2 rounded-none font-bold text-white bg-app-red-500 text-sm">EXPORT</a>
+                <a href="{% url 'cars-create' %}?situation={{ context.situation }}" class="px-4 py-2 rounded-none font-bold text-white bg-app-blue-500 text-sm">
+                    + ADD NEW CAR {% if context.situation == 'sell-your-car' %} TO SELL {% endif %}
+                </a>
             </div>
         </form>
+        {% if context.situation == 'sell-your-car' %}
+            <div></div>
+        {% else %}
+            <div class="flex flex-wrap gap-10">
+            {% for car in context.filter.qs %}
+                <div  id="delete-modal-{{ car.car_id }}" class="blocker hidden">
+                    <div class="modal p-4">
+                      <div class="bg-app-gray-400 h-full flex items-center gap-8 justify-center flex-col">
+                          <p class="text-app-blue-500 font-bold px-10">ARE YOU SURE YOU WANT TO DELETE THE FOLLOWING CAR?</p>
+                          <div class="flex items-center justify-center gap-8">
+                              <button onclick="closeModal('{{ car.car_id }}')" class="w-32 py-1 bg-app-red-500 font-bold text-white">CANCEL</button>
+                              <a href="{% url 'cars-delete' car_id=car.car_id %}?situation={{ context.situation }}" class="w-32 py-1 bg-app-blue-500 font-bold text-white">YES</a>
+                          </div>
+                      </div>
+                    </div>
+                </div>
+            	<div class="flex flex-col justify-start items-start relative">
+                    <button onclick="openDeleteModal('{{ car.car_id }}')" class="absolute top-[10px] right-[10px] text-app-red-900" rel="modal:open">
+                        <i class="bi bi-trash-fill"></i>
+                    </button>
+                    <button onclick="window.location = '{% url 'cars-detail' car_id=car.car_id %}?situation={{ context.situation }}'">
+                        <img class="w-80 h-52" src="{{ car.photo_car.url }}" alt="">
+                        <div class="w-full text-center flex flex-col items-start mt-2">
+                            <p class="text-center w-full font-roboto font-bold text-black text-ellipsis overflow-hidden">
+                                {{ car.model|upper }}
+                            </p>
+                            <p class="text-center w-full font-roboto font-bold text-black text-ellipsis overflow-hidden">BRAND -
+                                {{ car.brand|upper }}
+                            </p>
+                            <p class="text-center w-full font-roboto font-bold text-black text-ellipsis overflow-hidden">
+                                YEAR - {{ car.car_year }} / COLOR - {{ car.color|upper }}
+                            </p>
+                            <p class="text-center w-full font-roboto font-bold text-app-red-900 text-ellipsis overflow-hidden">
+                                U$ {{ car.price }}
+                            </p>
+                        </div>
+                    </button>
+                </div>
+            {% endfor %}
+        </div>
+        {% endif %}
     </div>
 {% endblock mainContent %}
+
+{% block extraJS %}
+    <script>
+        function openDeleteModal(carId) {
+            $(`#delete-modal-${carId}`).fadeIn()
+        }
+
+        function closeModal(carId) {
+            $(`#delete-modal-${carId}`).fadeOut()
+        }
+    </script>
+{% endblock extraJS %}
